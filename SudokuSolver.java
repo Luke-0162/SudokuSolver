@@ -9,6 +9,7 @@ import java.util.function.ToDoubleBiFunction;
  * as group 
  * due 30/09/2020
  */
+
 class SudokuSolver {
 
     int SUDOKU_SIZE = 9;          // Size of the grid.
@@ -34,37 +35,6 @@ class SudokuSolver {
 
     // Is there a conflict when we fill in d at position (r, c)?
     boolean givesConflict(int r, int c, int d) {
-
-        // Row and column conflic checker
-        for (int i = 0; i < SUDOKU_SIZE - 1; i++) {
-            if (d == grid[r][i]) {
-                return true; // Check for conflicts in row
-            } else if (d == grid[i][c]) {
-                return true; // Check for conficts in column
-            }
-        }
-
-        // Box conflict checker
-        double indexBoxRowCalculation = (r / SUDOKU_BOX_DIMENSION - 0.01); // TODO (find a better way to do this) -00.1 so that the third row of each box does not resolve to a higher integer
-        int indexBoxRow = (int)indexBoxRowCalculation;
-
-        double indexBoxColumnCalculation = (c / SUDOKU_BOX_DIMENSION - 0.01); // TODO (find a better way to do this) -00.1 so that the third row of each box does not resolve to a higher integer
-        int indexBoxColumn = (int)indexBoxColumnCalculation;
-
-        for (int i = 0; i < 3; i++) { // For each row
-            for (int k = 0; k < 3; k++) { // For each column
-                int startingRowIndex = indexBoxRow * 3;
-                int startingColumnIndex = indexBoxColumn * 3;
-                if (grid[startingRowIndex + i][startingColumnIndex + k] == d) {
-                    return true;
-                }
-            }
-        }
-
-        // Asterisk conflict checker
-
-
-
 
         return false;
     }
@@ -93,10 +63,10 @@ class SudokuSolver {
     // Is there a conflict in the box at (r, c) when we fill in d?
     boolean boxConflict(int r, int c, int d) {
 
-        double indexBoxRowCalculation = (r / SUDOKU_BOX_DIMENSION - 0.01); // TODO (find a better way to do this) -00.1 so that the third row of each box does not resolve to a higher integer
+        double indexBoxRowCalculation = (r / SUDOKU_BOX_DIMENSION);
         int indexBoxRow = (int)indexBoxRowCalculation;
         
-        double indexBoxColumnCalculation = (c / SUDOKU_BOX_DIMENSION - 0.01); // TODO (find a better way to do this) -00.1 so that the third row of each box does not resolve to a higher integer
+        double indexBoxColumnCalculation = (c / SUDOKU_BOX_DIMENSION);
         int indexBoxColumn = (int)indexBoxColumnCalculation;
         
         for (int i = 0; i < 3; i++) { // For each row
@@ -112,13 +82,25 @@ class SudokuSolver {
     }
 	
 	// Is there a conflict in the asterisk when we fill in d?
-	// Delete this comment and add your asteriskConflict method in its place.
+	boolean asteriskConflict(int r, int c, int d) {
+        if ((r == 2 && c == 2) || (r == 1 && c == 4) || (r == 2 && c == 6) || (r == 4 && c == 1) || (r == 4 && c == 4) || (r == 4 && c == 7) || (r == 6 && c == 2) || (r == 7 && c == 4) || (r == 6 && c == 6)) {
+            if ((d == grid[2][2]) || (d == grid[1][4]_ || (d == grid[2][6]) || (d == grid[4][1]) || (d == grid[4][4]) || (d == grid[4][7]) || (d == grid[6][2] || (d == grid[7][4]) || (d == grid[6][6])) {
+                return true;
+            }
+        }
+
+        return false;
+    
+    }
+
 	
 	// Finds the next empty square (in "reading order").
     int[] findEmptySquare() {
         for (int i = 0; i < SUDOKU_SIZE - 1; i++) { // For each row
             for (int k = 0; k < SUDOKU_SIZE - 1; k++) { // For each column
-                // TO DO
+                if (grid[i][k] == 0) {
+                    // This is the next empty square in reading order
+                }
             }
         }
         return new int[]{-1, -1};
@@ -126,16 +108,16 @@ class SudokuSolver {
 
     // Find all solutions for the grid, and stores the final solution.
     void solve() {
-        // TODO
+        
     }
 
     // Print the sudoku grid.
     void print() {
         System.out.println("+");
-        for () {
+        for (int i = 0; i < SUDOKU_SIZE - 2; i++) {
             System.out.print("-");
         }
-        System.out.println("+");
+        System.out.print("+");
     }
 
     // Run the actual solver.
